@@ -171,7 +171,7 @@
         .hero-text {
             font-size: 14px;
             line-height: 1.5;
-            margin: 0 0 14px;
+            margin: 0;
             color: rgba(255, 255, 255, 0.95);
         }
 
@@ -560,10 +560,11 @@
         .mini-banner {
             overflow-x: auto;
             display: flex;
-            gap: 10px;
+            gap: 12px;
             margin-top: 10px;
+            padding: 8px 6px;
             scroll-behavior: smooth;
-            cursor: pointer;
+            scroll-snap-type: x mandatory;
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
@@ -573,15 +574,25 @@
         }
 
         .mini-banner img {
-    width: 84%;
-    flex-shrink: 0;
-    border-radius: 20px;
-    box-shadow: var(--shadow);
-    aspect-ratio: 16/9;
-    object-fit: cover;
-    object-position: center;
-    background: #f3dfd9;
-}
+            width: 84%;
+            flex-shrink: 0;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            object-position: center;
+            background: #f3dfd9;
+            scroll-snap-align: center;
+            opacity: 0.65;
+            transform: scale(0.92);
+            transition: transform 0.35s ease, opacity 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .mini-banner img.active {
+            opacity: 1;
+            transform: scale(1);
+            box-shadow: 0 14px 34px rgba(123, 47, 47, 0.20);
+        }
 
         .impact-card {
             background: linear-gradient(135deg, #fff 0%, #fff5f2 100%);
@@ -694,6 +705,10 @@
             .brand-title {
                 font-size: 28px;
             }
+
+            .mini-banner img {
+                width: 88%;
+            }
         }
     </style>
 </head>
@@ -734,6 +749,9 @@
         let frete = 0;
         let modalAberto = false;
         let carouselTimer;
+        let carouselScrollHandler = null;
+        let carouselTouchPauseHandler = null;
+        let carouselResumeTimeout = null;
 
         function navigate(fn) {
             viewStack.push(fn);
@@ -807,7 +825,6 @@
                         <p class="hero-text">
                             Doces e salgados artesanais com apresentação forte, sabor marcante e aquele visual que faz o cliente querer pedir na hora.
                         </p>
-                        </div>
                     </div>
                 </div>
 
@@ -823,8 +840,7 @@
 
                 <div class="impact-card">
                     <b>Sabores da Mari é daquelas marcas que vendem antes mesmo da primeira mordida.</b>
-                    <p>
-                    </p>
+                    <p></p>
                 </div>
 
                 <div class="section-title">
@@ -859,23 +875,92 @@
             startCarousel();
         }
 
-        function startCarousel() {
-            if (carouselTimer) clearInterval(carouselTimer);
-            const container = document.getElementById('carousel-container');
+        function updateActiveBanner() {
+            const container = document.getElementById("carousel-container");
             if (!container) return;
 
-            carouselTimer = setInterval(() => {
-                const scrollAmount = container.offsetWidth * 0.84;
-                if (container.scrollLeft + container.offsetWidth >= container.scrollWidth - 10) {
-                    container.scrollTo({ left: 0, behavior: 'smooth' });
+            const imgs = container.querySelectorAll("img");
+            const center = container.scrollLeft + (container.offsetWidth / 2);
+
+            imgs.forEach(img => {
+                const imgCenter = img.offsetLeft + (img.offsetWidth / 2);
+                const distance = Math.abs(center - imgCenter);
+
+                if (distance < img.offsetWidth / 2) {
+                    img.classList.add("active");
                 } else {
-                    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                    img.classList.remove("active");
                 }
+            });
+        }
+
+        function stopCarousel() {
+            if (carouselTimer) {
+                clearInterval(carouselTimer);
+                carouselTimer = null;
+            }
+        }
+
+        function resumeCarouselWithDelay() {
+            clearTimeout(carouselResumeTimeout);
+            carouselResumeTimeout = setTimeout(() => {
+                startCarousel();
+            }, 2500);
+        }
+
+        function startCarousel() {
+            stopCarousel();
+
+            const container = document.getElementById("carousel-container");
+            if (!container) return;
+
+            if (!container.dataset.bound) {
+                carouselScrollHandler = () => updateActiveBanner();
+                carouselTouchPauseHandler = () => {
+                    stopCarousel();
+                    resumeCarouselWithDelay();
+                };
+
+                container.addEventListener("scroll", carouselScrollHandler, { passive: true });
+                container.addEventListener("touchstart", carouselTouchPauseHandler, { passive: true });
+                container.addEventListener("mousedown", carouselTouchPauseHandler);
+
+                container.dataset.bound = "true";
+            }
+
+            setTimeout(updateActiveBanner, 150);
+
+            carouselTimer = setInterval(() => {
+                const imgs = container.querySelectorAll("img");
+                if (!imgs.length) return;
+
+                const center = container.scrollLeft + (container.offsetWidth / 2);
+                let currentIndex = 0;
+
+                imgs.forEach((img, index) => {
+                    const imgCenter = img.offsetLeft + (img.offsetWidth / 2);
+                    if (Math.abs(center - imgCenter) < img.offsetWidth / 2) {
+                        currentIndex = index;
+                    }
+                });
+
+                let nextIndex = currentIndex + 1;
+                if (nextIndex >= imgs.length) nextIndex = 0;
+
+                const nextImg = imgs[nextIndex];
+                const targetLeft = nextImg.offsetLeft - ((container.offsetWidth - nextImg.offsetWidth) / 2);
+
+                container.scrollTo({
+                    left: Math.max(0, targetLeft),
+                    behavior: "smooth"
+                });
+
+                setTimeout(updateActiveBanner, 400);
             }, 3500);
         }
 
         function openCat(cat) {
-            if (carouselTimer) clearInterval(carouselTimer);
+            stopCarousel();
 
             let html = `
                 <button class="back-btn" onclick="history.back()">⬅ Voltar</button>
@@ -996,6 +1081,8 @@
         }
 
         function renderCart() {
+            stopCarousel();
+
             let html = `
                 <button class="back-btn" onclick="history.back()">⬅ Voltar</button>
                 <h2 class="checkout-title">Seu carrinho</h2>
@@ -1052,6 +1139,8 @@
         }
 
         function renderCheckout() {
+            stopCarousel();
+
             let html = `
                 <button class="back-btn" onclick="history.back()">⬅ Voltar</button>
                 <h2 class="checkout-title">Dados do pedido</h2>
@@ -1278,6 +1367,8 @@
         }
 
         function renderRevisao() {
+            stopCarousel();
+
             let subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
             let total = dadosPedido.tipo == "Entrega" ? subtotal + frete : subtotal;
 
