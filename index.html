@@ -574,19 +574,20 @@
         }
 
         .mini-banner img {
-    width: 84%;
-    flex-shrink: 0;
-    border-radius: 20px;
-    box-shadow: var(--shadow);
-    aspect-ratio: 16/10;
-    object-fit: cover;
-    object-position: center;
-    background: #f3dfd9;
-    scroll-snap-align: center;
-    opacity: 0.65;
-    transform: scale(0.92);
-    transition: transform 0.35s ease, opacity 0.35s ease, box-shadow 0.35s ease;
-}
+            width: 84%;
+            flex-shrink: 0;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            aspect-ratio: 16/10;
+            object-fit: cover;
+            object-position: center;
+            background: #f3dfd9;
+            scroll-snap-align: center;
+            opacity: 0.65;
+            transform: scale(0.92);
+            transition: transform 0.35s ease, opacity 0.35s ease, box-shadow 0.35s ease;
+        }
+
         .mini-banner img.active {
             opacity: 1;
             transform: scale(1);
@@ -778,20 +779,16 @@
                 { name: "Copo Da Felicidade 260Ml", price: 27.90, oldPrice: 30.00, descricao: "A combinação perfeita entre brigadeiro e beijinho em uma explosão de sabor.", img: "doce4.jpg" },
                 { name: "Cone Recheado", price: 8.90, oldPrice: 10.90, descricao: "Doce artesanal marcante, crocante por fora e irresistível a cada mordida.", img: "doce5.jpg" },
                 { name: "Palha Italiana", price: 8.90, oldPrice: 10.90, descricao: "Doce artesanal marcante, crocante por fora e irresistível a cada mordida.", img: "doce6.jpg" },
-                { name: "Palha Italiana", price: 8.90, oldPrice: 10.90, descricao: "Doce artesanal marcante, crocante por fora e irresistível a cada mordida.", img: "doce7.jpg" },
-                { name: "Palha Italiana", price: 8.90, oldPrice: 10.90, descricao: "Doce artesanal marcante, crocante por fora e irresistível a cada mordida.", img: "doce8.jpg" },
-                { name: "Palha Italiana", price: 8.90, oldPrice: 10.90, descricao: "Doce artesanal marcante, crocante por fora e irresistível a cada mordida.", img: "doce9.jpg" },
-                { name: "Palha Italiana", price: 8.90, oldPrice: 10.90, descricao: "Doce artesanal marcante, crocante por fora e irresistível a cada mordida.", img: "doce10.jpg" },
-
-
-
-
+                { name: "Palha Italiana Branca", price: 8.90, oldPrice: 10.90, descricao: "Versão delicada e cremosa de um doce clássico que chama atenção na vitrine.", img: "doce7.jpg" },
+                { name: "Palha Italiana de Ninho", price: 8.90, oldPrice: 10.90, descricao: "Sabor marcante, visual bonito e ótima opção para vendas por impulso.", img: "doce8.jpg" },
+                { name: "Palha Italiana Gourmet", price: 8.90, oldPrice: 10.90, descricao: "Apresentação premium e sabor artesanal para valorizar ainda mais o cardápio.", img: "doce9.jpg" },
+                { name: "Palha Italiana Especial", price: 8.90, oldPrice: 10.90, descricao: "Doce com visual forte, textura cremosa e excelente saída em pedidos.", img: "doce10.jpg" }
             ],
             "CENTOS DE BRIGADEIRO": [
-                { name: "Bombom de Morango", price: 8.90, oldPrice: 10.90, descricao: "Bombom artesanal recheado, delicado e perfeito para presentear ou se apaixonar.", img: "bombom1.jpg" },
-                { name: "Bombom de Uva", price: 8.90, oldPrice: 10.90, descricao: "Recheio suculento envolvido em muito sabor e acabamento impecável.", img: "bombom2.jpg" },
-                { name: "Bombom Tradicional", price: 6.90, oldPrice: 8.90, descricao: "Bombom clássico com sabor intenso e apresentação de dar água na boca.", img: "bombom3.jpg" },
-                { name: "Bombom Crocante", price: 7.90, oldPrice: 9.90, descricao: "Casquinha e recheio em equilíbrio perfeito para impressionar no primeiro pedaço.", img: "bombom4.jpg" }
+                { name: "Cento de Brigadeiro Tradicional", price: 89.90, oldPrice: 99.90, descricao: "Perfeito para festas, encomendas e clientes que buscam muito sabor com apresentação caprichada.", img: "bombom1.jpg" },
+                { name: "Cento de Brigadeiro Gourmet", price: 99.90, oldPrice: 109.90, descricao: "Brigadeiros com acabamento premium, ideais para eventos e vendas especiais.", img: "bombom2.jpg" },
+                { name: "Cento de Beijinho", price: 89.90, oldPrice: 99.90, descricao: "Docinho clássico, delicado e com excelente aceitação para aniversários e comemorações.", img: "bombom3.jpg" },
+                { name: "Cento Misto", price: 94.90, oldPrice: 104.90, descricao: "Combinação variada para agradar mais clientes em um único pedido.", img: "bombom4.jpg" }
             ],
             "BOLOS GOURMET": [
                 { name: "Bolo de Pote Ninho", price: 13.90, oldPrice: 16.90, descricao: "Camadas cremosas e montagem caprichada que fazem o cliente querer repetir.", img: "bolo1.jpg" },
@@ -810,15 +807,22 @@
                 { name: "Guaraná Lata", price: 6.00, oldPrice: 7.00, descricao: "Ideal para completar combos e aumentar o ticket médio.", img: "bebida2.jpg" },
                 { name: "Suco Natural", price: 8.00, oldPrice: 10.00, descricao: "Opção refrescante com cara de produto artesanal e diferenciado.", img: "bebida3.jpg" },
                 { name: "Água Mineral", price: 3.50, oldPrice: 4.50, descricao: "Item prático para complementar pedidos rápidos.", img: "bebida4.jpg" }
+            ],
+            "PASCOA 2026": [
+                { name: "Ovo de Colher Brigadeiro", price: 39.90, oldPrice: 45.90, descricao: "Ovo de Páscoa recheado com muito brigadeiro cremoso e apresentação perfeita para presentear.", img: "pascoa1.jpg" },
+                { name: "Ovo de Colher Ninho com Nutella", price: 44.90, oldPrice: 49.90, descricao: "Combinação campeã para datas sazonais, com visual premium e alto valor percebido.", img: "pascoa2.jpg" },
+                { name: "Caixa Presente de Bombons", price: 29.90, oldPrice: 34.90, descricao: "Uma opção elegante para vender lembranças e presentes na temporada de Páscoa.", img: "pascoa3.jpg" },
+                { name: "Mini Ovos Gourmet", price: 24.90, oldPrice: 29.90, descricao: "Kit ideal para montar combos temáticos e aumentar o ticket médio nas vendas sazonais.", img: "pascoa4.jpg" }
             ]
         };
 
         const categoriaInfo = {
             "DOCES QUERIDINHOS": { emoji: "🍬", frase: "Os doces que fazem o cliente pedir de novo." },
-            "BOMBOMS": { emoji: "🍫", frase: "Delicados, bonitos e perfeitos para vender por impulso." },
+            "CENTOS DE BRIGADEIRO": { emoji: "🍫", frase: "Docinhos perfeitos para festas, encomendas e vendas por impulso." },
             "BOLOS GOURMET": { emoji: "🍰", frase: "Camadas, cremosidade e apresentação de vitrine." },
             "TORTAS SALGADAS": { emoji: "🥧", frase: "Salgados com cara de produto premium e sabor marcante." },
-            "BEBIDAS": { emoji: "🥤", frase: "Complementos ideais para fechar o pedido completo." }
+            "BEBIDAS": { emoji: "🥤", frase: "Complementos ideais para fechar o pedido completo." },
+            "PASCOA 2026": { emoji: "🐰", frase: "Linha sazonal com forte apelo visual para vender muito na Páscoa." }
         };
 
         function formatMoney(value) {
